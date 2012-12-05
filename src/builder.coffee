@@ -124,6 +124,7 @@ fs_coffee = (src, opt, done) ->
 
 
 fs_stylus = (src, opt, done) ->
+  opt.filename = src unless opt.filename
   $.chain [
     (cb) -> read(src, cb)
     (err, str) -> ss_stylus(str, opt, done)

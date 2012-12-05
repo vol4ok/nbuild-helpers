@@ -136,8 +136,6 @@ describe "builder", ->
         namespace: "test"
         , (err, str) ->
           expect(err).to.be.null
-          console.log str
-          fs.writeFileSync "#{FIXTURES_DIR}/__JS_RESULT", str, "utf-8"
           expect(str).to.have.string(JS_RESULT_2)
           done()
 
