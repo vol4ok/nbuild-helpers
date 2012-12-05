@@ -1,0 +1,33 @@
+$.ns(['test'], function (exports) {
+    var A, Base, a;
+    Base = function () {
+        var privateVar;
+        privateVar = 4;
+        function Base() {
+            privateVar = 5;
+        }
+        Base.prototype.methodA = function () {
+            return 'test' + this.fieldA + '+' + privateVar;
+        };
+        return Base;
+    }();
+    A = function (_super) {
+        $.inherit(A, _super);
+        function A() {
+            this.methodB = $.bind(this.methodB, this);
+            A.__super__.constructor.apply(this, arguments);
+            this.fieldA = 123;
+            this.pMethB = methodB;
+        }
+        A.prototype.methodB = function (a) {
+            if (a === 1 || a === 2 || a === 3) {
+                return this.methodA() + a;
+            } else {
+                return false;
+            }
+        };
+        return A;
+    }(Base);
+    a = new A();
+    a.methodB(1);
+});

@@ -1,0 +1,1 @@
+function(c,p,i){var _=this;_.b(i=i||"");_.b("<p>Hello, ");_.b(_.t(_.f("world",c,p,0)));_.b("!</p>");_.b("\n" + i);_.b("<ul>");_.b("\n" + i);if(_.s(_.f("hash",c,p,1),c,p,0,45,68,"{{ }}")){_.rs(c,p,function(c,p,_){_.b("  <li>");_.b(_.v(_.f("item",c,p,0)));_.b("</li>");_.b("\n");});c.pop();}_.b("<ul>");_.b("\n" + i);_.b(_.rp("part",c,p,""));return _.fl();;}

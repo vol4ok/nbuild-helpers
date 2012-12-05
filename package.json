@@ -1,0 +1,38 @@
+{
+  "name": "nbuild",
+  "version": "0.0.0",
+  "description": "Set of build helpers",
+  "main": "lib/builder.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "escodegen": "~0.0.15",
+    "esprima": "~1.0.2",
+    "hogan.js": "~2.0.0",
+    "redis": "~0.8.2",
+    "stylus": "~0.31.0"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.4.0",
+    "chai": "~1.4.0",
+    "mocha": "~1.7.3"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": "",
+  "keywords": [
+    "build",
+    "builder",
+    "stylus",
+    "coffee",
+    "coffeekup",
+    "hogan",
+    "mustache",
+    "redis"
+  ],
+  "author": "Andrew Volkov <hello@vol4ok.net>",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
