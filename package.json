@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "core.js": ">=0.3.2",
+    "coffee-script": "~1.4.0",
     "escodegen": "~0.0.15",
     "esprima": "~1.0.2",
     "hogan.js": "~2.0.0",
@@ -15,7 +16,6 @@
     "stylus": "~0.31.0"
   },
   "devDependencies": {
-    "coffee-script": "~1.4.0",
     "chai": "~1.4.0",
     "mocha": "~1.7.3"
   },
