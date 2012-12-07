@@ -1,4 +1,4 @@
-$.ns(['test'], function (exports) {
+$.ns(['test'], function (module, exports) {
     var A, Base, a;
     Base = function () {
         var privateVar;

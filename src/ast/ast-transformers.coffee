@@ -57,6 +57,9 @@ class ASTNamespaceWrapper extends ASTWalker
       id: null
       params: [
         type: "Identifier"
+        name: "module"
+      ,
+        type: "Identifier"
         name: "exports"
       ]
       body: 
