@@ -144,6 +144,7 @@ describe "builder", ->
     JS_CODE_1 = fs.readFileSync "#{FIXTURES_DIR}/js-code-1.js", "utf-8"
     JS_RESULT_1 = fs.readFileSync "#{FIXTURES_DIR}/JS_RESULT_1", "utf-8"
     JS_RESULT_2 = fs.readFileSync "#{FIXTURES_DIR}/JS_RESULT_2", "utf-8"
+    JS_RESULT_3 = fs.readFileSync "#{FIXTURES_DIR}/JS_RESULT_3", "utf-8"
 
     it "should have method #ss_js", ->
       expect(b).to.respondTo("ss_js")
@@ -152,7 +153,6 @@ describe "builder", ->
     it "should compile javascript code", (done) ->
       b.ss_js JS_CODE_1, {}, (err, str) ->
         expect(err).to.be.null
-        # fs.writeFileSync "#{FIXTURES_DIR}/JS_RESULT_1", str, "utf-8"
         expect(str).to.have.string(JS_RESULT_1)
         done()
 
@@ -163,6 +163,18 @@ describe "builder", ->
         , (err, str) ->
           expect(err).to.be.null
           expect(str).to.have.string(JS_RESULT_2)
+          done()
+
+    it "should compile, transform and compress javascript code", (done) ->
+      b.ss_js JS_CODE_1, 
+        transform: [b.TRANSFORM_COFFEESCRIPT_REPLACER, b.TRANSFORM_NAMESPACE_WRAPPER]
+        namespace: "test"
+        compress: yes
+        compressor: {warnings: no}
+        , (err, str) ->
+          expect(err).to.be.null
+          #fs.writeFileSync "#{FIXTURES_DIR}/JS_RESULT_4", str, "utf-8"
+          expect(str).to.have.string(JS_RESULT_3)
           done()
 
 
