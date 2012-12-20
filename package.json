@@ -1,6 +1,6 @@
 {
   "name": "nbuild",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Set of build helpers",
   "main": "lib/builder.js",
   "directories": {
@@ -13,7 +13,9 @@
     "esprima": "~1.0.2",
     "hogan.js": "~2.0.0",
     "redis": "~0.8.2",
-    "stylus": "~0.31.0"
+    "stylus": "~0.31.0",
+    "uglify-js": ">=2.2.0",
+    "html-minifier": ">=0.4.5"
   },
   "devDependencies": {
     "chai": "~1.4.0",
