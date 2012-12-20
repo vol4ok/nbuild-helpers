@@ -298,10 +298,15 @@ cake = (cakedir, done) ->
 
   complete = (code) ->
     code = coffee.compile(code, {bare: yes})
-    mod = new Module(cakefile, module)
     curdir = process.cwd()
     process.chdir(cakedir)
+    
+    mod = new Module(cakefile, null)
+    mod.filename = cakefile
+    mod.paths = Module._nodeModulePaths($.dirname(cakefile))
     mod._compile(code, cakefile)
+    mod.loaded = yes
+
     process.chdir(curdir)
     return mod.exports
 
