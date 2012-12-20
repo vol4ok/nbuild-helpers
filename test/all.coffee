@@ -631,8 +631,31 @@ describe "builder", ->
       expect(b).to.respondTo("cake")
       expect(b.ff_copy).to.be.a("function")
 
-    it "cake should exec Cakefile sybc", ->
+    it "should exec Cakefile sync", ->
       exp = b.cake("#{FIXTURES_DIR}/cake-test")
       expect(exp).to.have.ownProperty("build")
       str = exp.build(who: "Cakefile")
       expect(str).to.equal("Cakefile successfully loaded!")
+
+  describe "#mkdirp", ->
+
+    it "should have method #mkdirp", ->
+      expect(b).to.respondTo("mkdirp")
+      expect(b.mkdirp).to.be.a("function")
+
+    it "should create dir sync", ->
+      b.mkdirp("#{__dirname}/temp/mkdirp/sync")
+      exists = fs.existsSync("#{__dirname}/temp/mkdirp/sync")
+      expect(exists).to.be.true
+
+    it "should create dir async", (done) ->
+      b.mkdirp "#{__dirname}/temp/mkdirp/async", (err) ->
+        expect(err).to.be.null
+        exists = fs.existsSync("#{__dirname}/temp/mkdirp/sync")
+        expect(exists).to.be.true
+        done()
+
+    after (done) ->
+      exec = require("child_process").exec
+      exec("rm -rf temp", cwd: __dirname, done)
+      

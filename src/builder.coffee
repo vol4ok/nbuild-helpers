@@ -6,9 +6,9 @@ BUILD_DIR = global.BUILD_DIR or __dirname
 REDIS_DB_INDEX = REDIS_DB_INDEX or 0
 
 unless $
-  $ = require('core.js')
-  $.ext(require('fs'))
+  $ = require('core.js')  
   $.ext(require('path'))
+  $.ext(require('fs'))
   $.ext(require('util'))
   $.ext(require('child_process'))
 
@@ -310,6 +310,32 @@ cake = (cakedir, done) ->
     code = $.readFileSync(cakefile, "utf-8")
     return complete(code)
 
+mkdirp = (path, options = {}, callback) ->
+  if arguments.length is 3 and $.isFunction(arguments[2])
+    mkdirp_async.apply(this, arguments)
+  else if arguments.length is 2 and $.isFunction(arguments[1])
+    mkdirp_async(arguments[0], {}, arguments[1])
+  else
+    mkdirp_sync.apply(this, arguments)
+
+mkdirp_async = (path, options = {}, callback) ->
+  mode = options.mode ? 0o755
+  parent = $.dirname(path)
+  $.exists parent, (isExists) ->
+    completion = (err) ->
+      return callback(err) if err?
+      $.mkdir(path, mode, callback)
+    if isExists then completion(null)
+    else mkdirp_async(parent, options, completion)
+
+    
+mkdirp_sync = (path, options = {}) ->
+  mode = options.mode or 0o755
+  parent = $.dirname(path)
+  mkdirp_sync(parent, options) unless $.existsSync(parent)
+  unless $.existsSync(path)
+    $.mkdirSync(path, mode)
+
 module.exports = {
 
   initDBFS
@@ -355,6 +381,8 @@ module.exports = {
   ff_copy
 
   cake
+
+  mkdirp
 
   COFFEE
   STYLUS
