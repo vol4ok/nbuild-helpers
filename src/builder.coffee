@@ -46,11 +46,13 @@ AST_TRANSFORMERS[TRANSFORM_NAMESPACE_WRAPPER] = (ast, opt) ->
   (new ASTNamespaceWrapper(name: opt.namespace)).walk(ast)
 
 
-basename = (path) -> /^(?:.*\/)?(.+?)(?:\.[^\.]*)?$/.exec(path)[1]
-remove_ext = (filename) -> filename.replace(/(\.[^.\/]*)?$/i, '')
+BASENAME_REXP  = /^(?:.*\/)?(.+?)(?:\.[^\.]*)?$/
+CHANGEEXT_REXP = /(\.[^.\/]*)?$/i
+basename = (path) -> BASENAME_REXP.exec(path)[1]
+remove_ext = (filename) -> filename.replace(CHANGEEXT_REXP, '')
 change_ext = (filename, ext) -> 
   ext = '.' + ext if ext[0] isnt '.'
-  filename.replace(/(\.[^.\/]*)?$/i, ext)
+  filename.replace(CHANGEEXT_REXP, ext)
 
 
 _createRedisClient = (opt = {}) ->
