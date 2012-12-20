@@ -86,6 +86,20 @@ ss_stylus = (str, opt, done) ->
   stylus.render str, opt, done
 
 ss_html = (str, opt, done) ->
+  opt.compress ?= yes
+  if opt.compress
+    html_minify = require("html-minifier").minify
+    str = html_minify str, $.defaults opt,
+      removeEmptyElements: no
+      removeEmptyAttributes: yes
+      removeAttributeQuotes: no
+      removeComments: yes
+      collapseBooleanAttributes: yes
+      collapseWhitespace: yes
+      removeCDATASectionsFromCDATA: no
+    delete global.reStackedTag
+
+  else
   done(null, str)
 
 ss_js = (str, opt, done) ->
