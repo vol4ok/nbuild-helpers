@@ -574,7 +574,9 @@ describe "builder", ->
         done()
 
     it "should copy file to dbfs", (done) ->
+      b.initDBFS()
       b.ff_copy COPY_FILE_1, OUTPUT_PATH_2, {}, (err) ->
+        b.freeDBFS()
         expect(err).to.be.null
         redis = Redis.createClient()
         redis.select(REDIS_DB_INDEX)
