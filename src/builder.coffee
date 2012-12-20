@@ -298,7 +298,7 @@ cake = (cakedir, done) ->
 
   complete = (code) ->
     code = coffee.compile(code, {bare: yes})
-    mod = new Module(cakefile, null)
+    mod = new Module(cakefile, module)
     curdir = process.cwd()
     process.chdir(cakedir)
     mod._compile(code, cakefile)
