@@ -107,7 +107,18 @@ ss_js = (str, opt, done) ->
   if opt.transform
     for tfname in opt.transform
       ast = AST_TRANSFORMERS[tfname](ast, opt)
-  str = escodegen.generate(ast)
+  if opt.compress
+    UglifyJS = require("uglify-js")
+    uast = UglifyJS.AST_Node.from_mozilla_ast(ast)
+    uast.figure_out_scope()
+    compressor = UglifyJS.Compressor(opt.compressor)
+    uast = uast.transform(compressor)
+    uast.figure_out_scope()
+    uast.compute_char_frequency()
+    uast.mangle_names()
+    str = uast.print_to_string(opt.printer)
+  else
+    str = escodegen.generate(ast)
   done(null, str)
 
 ss_mustache = (str, opt, done) ->
