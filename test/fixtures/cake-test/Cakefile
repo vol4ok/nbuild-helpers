@@ -1,0 +1,7 @@
+build = (opt) ->
+  return "#{opt.who} successfully loaded!"
+
+if task?
+  task "build", -> build()
+else
+  exports.build = build
