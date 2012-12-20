@@ -624,3 +624,15 @@ describe "builder", ->
           redis.del OUTPUT_PATH_2, (err, str) ->
             redis.end()
             done()
+
+  describe "#cake", ->
+
+    it "should have method #cake", ->
+      expect(b).to.respondTo("cake")
+      expect(b.ff_copy).to.be.a("function")
+
+    it "cake should exec Cakefile sybc", ->
+      exp = b.cake("#{FIXTURES_DIR}/cake-test")
+      expect(exp).to.have.ownProperty("build")
+      str = exp.build(who: "Cakefile")
+      expect(str).to.equal("Cakefile successfully loaded!")
