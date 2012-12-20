@@ -47,6 +47,10 @@ AST_TRANSFORMERS[TRANSFORM_NAMESPACE_WRAPPER] = (ast, opt) ->
 
 
 basename = (path) -> /^(?:.*\/)?(.+?)(?:\.[^\.]*)?$/.exec(path)[1]
+remove_ext = (filename) -> filename.replace(/(\.[^.\/]*)?$/i, '')
+change_ext = (filename, ext) -> 
+  ext = '.' + ext if ext[0] isnt '.'
+  filename.replace(/(\.[^.\/]*)?$/i, ext)
 
 
 _createRedisClient = (opt = {}) ->
@@ -343,6 +347,8 @@ module.exports = {
 
   is_dbfs
   basename
+  remove_ext
+  change_ext
   read
   write
   
