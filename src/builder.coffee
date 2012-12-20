@@ -264,6 +264,9 @@ make = (targets) ->
 
 module.exports = {
 
+  initDBFS
+  freeDBFS
+
   is_dbfs
   basename
   read
