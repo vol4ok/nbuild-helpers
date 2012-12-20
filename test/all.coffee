@@ -45,6 +45,32 @@ describe "builder", ->
         done()
 
 
+
+  describe "#ss_html", ->
+
+    HTML_CODE_1   = fs.readFileSync "#{FIXTURES_DIR}/html-1.html", "utf-8"
+    HTML_RESULT_1 = fs.readFileSync "#{FIXTURES_DIR}/HTML_RESULT_1", "utf-8"
+    HTML_RESULT_2 = fs.readFileSync "#{FIXTURES_DIR}/HTML_RESULT_2", "utf-8"
+
+    it "should have method #ss_html", ->
+      expect(b).to.respondTo("ss_html")
+      expect(b.ss_html).to.be.a("function")
+
+    it "should compile html code", (done) ->
+      b.ss_html HTML_CODE_1, {compress: no}, (err, str) ->
+        expect(err).to.be.null
+        expect(str).to.have.string(HTML_RESULT_1)
+        #fs.writeFileSync "#{FIXTURES_DIR}/HTML_RESULT_1", str, "utf-8"
+        done()
+
+
+    it "should compile and compress html code", (done) ->
+      b.ss_html HTML_CODE_1, {}, (err, str) ->
+        expect(err).to.be.null
+        expect(str).to.have.string(HTML_RESULT_2)
+        #fs.writeFileSync "#{FIXTURES_DIR}/HTML_RESULT_2", str, "utf-8"
+        done()
+
   describe "#ss_mustache", ->
 
     MUSTACHE_CODE_1 = fs.readFileSync "#{FIXTURES_DIR}/mustache-code-1.mu", "utf-8"
