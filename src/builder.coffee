@@ -47,16 +47,21 @@ AST_TRANSFORMERS[TRANSFORM_NAMESPACE_WRAPPER] = (ast, opt) ->
 
 basename = (path) -> /^(?:.*\/)?(.+?)(?:\.[^\.]*)?$/.exec(path)[1]
 
-initDBFS = (opt = {}) ->
+
+_createRedisClient = (opt = {}) ->
   opt.port  ?= 6379
   opt.index ?= 0
   dbfs = Redis.createClient(opt.port)
   dbfs.select(opt.index)
   return dbfs
 
+s_dbfs = null 
+
+initDBFS = -> s_dbfs = _createRedisClient(index: REDIS_DB_INDEX)
+freeDBFS = -> if s_dbfs then s_dbfs.end(); s_dbfs = null 
 is_dbfs = (path) -> $.startsWith(path, "dbfs:")
 
-s_dbfs = initDBFS(index: REDIS_DB_INDEX) 
+
 
 read = (src, done) ->
   if is_dbfs(src)
