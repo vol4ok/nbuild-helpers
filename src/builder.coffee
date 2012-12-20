@@ -19,6 +19,7 @@ hogan     = require("hogan.js")
 ck        = require("./coffeekup")
 esprima   = require("esprima")
 escodegen = require("escodegen")
+Module    = require("module")
 
 { ASTDepManager
   ASTNamespaceWrapper
@@ -260,7 +261,29 @@ ff_merge = (srcs, dst, opt, done) ->
     (err, str) -> write(dst, str, done)
   ], done
 
-make = (targets) ->
+
+cake = (cakedir, done) ->
+  cakefile = "#{cakedir}/Cakefile"
+
+  complete = (code) ->
+    code = coffee.compile(code, {bare: yes})
+    mod = new Module(cakefile, null)
+    curdir = process.cwd()
+    process.chdir(cakedir)
+    mod._compile(code, cakefile)
+    process.chdir(curdir)
+    return mod.exports
+
+  if $.isFunction(done)
+    $.chain [
+      (cb) -> $.realpath(cakefile, cb)
+      (err, cakefile, cb) -> $.readFile(cakefile, "utf-8", cb)
+      (err, code) -> done(null, complete(code))
+    ], done
+  else
+    cakefile = $.realpathSync(cakefile)
+    code = $.readFileSync(cakefile, "utf-8")
+    return complete(code)
 
 module.exports = {
 
@@ -305,6 +328,8 @@ module.exports = {
   ff_html
 
   ff_copy
+
+  cake
 
   COFFEE
   STYLUS
