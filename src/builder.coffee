@@ -347,6 +347,12 @@ mkdirp_sync = (path, options = {}) ->
   unless $.existsSync(path)
     $.mkdirSync(path, mode)
 
+resolve_module_dir = (req) ->
+  path = require.resolve(req)
+  path = $.dirname(path)
+  path = $.dirname(path) until $.existsSync(path + "/package.json") and path != "/"
+  return path
+
 module.exports = {
 
   initDBFS
@@ -394,8 +400,8 @@ module.exports = {
   ff_copy
 
   cake
-
   mkdirp
+  resolve_module_dir
 
   COFFEE
   STYLUS

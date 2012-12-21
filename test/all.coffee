@@ -658,4 +658,15 @@ describe "builder", ->
     after (done) ->
       exec = require("child_process").exec
       exec("rm -rf temp", cwd: __dirname, done)
+
+  describe "#resolve_module_dir", ->
+
+    it "should have method #resolve_module_dir", ->
+      expect(b).to.respondTo("resolve_module_dir")
+      expect(b.resolve_module_dir).to.be.a("function")
+
+    it "should resove module path", ->
+      path = b.resolve_module_dir("mocha")
+      truepath = fs.realpathSync(__dirname + "/../node_modules/mocha")
+      expect(path).to.be.equal(truepath)
       
